@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
+using namespace std;
 
 #include "LU_decom.h"
 int main(){
@@ -18,7 +19,7 @@ int main(){
 	short int loops = 0;
 	inFile >> loops;
 	while(loops >= 0){
-
+		LU_decom(inFile , outFile);
 		loops--;
 	}
 	return 0;
