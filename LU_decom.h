@@ -5,8 +5,8 @@ class LU_decom{
 		
 	private:
 		void P_LU(ofstream &outFile);
-		short int row;
-		short int col;
+		static int row;
+		static int col;
 		int mat[row][col];
 		double L[row][row];
 		double U[row][col];
