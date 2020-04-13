@@ -14,6 +14,11 @@ void LU_decom::LU_decom(ifstream &inFile , ofstream &outFile){
 
 	for(int i = 1 ; i < row ; i++){
 		for(int j = 0 ; j < col ; j++){
+			if(mat[i-1][j] == 0){
+				outFile << "False" << endl;
+				P_LU(outFile , 0); //not possible to do A=LU
+				return;
+			}
 			if(L[i][j] != 0)
 				continue;
 			double temp = (mat[i][j] / mat[i-1][j]);
@@ -22,6 +27,29 @@ void LU_decom::LU_decom(ifstream &inFile , ofstream &outFile){
 				U[i][k] = (U[j][k] + (U[j][k] * temp) );
 		}
 	}
+
+	short int pivot_count = 0;
+	for(int i = 0 ; i < row  && i < col ; i++){ //check pivots
+			if(U[i][i] != 0)
+				pivot_count++;
+	}
+	bool compare;
+	if(row < col)
+		compare = 0;
+	else
+		compare = 1;
+	if(compare == 0 && pivot_count < row){
+		outFile << "False" << endl;
+		P_LU(outFile , 1); //not enough pivots
+		return;
+	}
+	else if(compare == 1 && pivot_count < col){
+		outFile << "False" << endl;
+		P_LU(outFile , 2);
+		return;
+	}
+	
+	outFile << "True" << endl;
 	outFile << row << ' ' << row << '\n'; //print L
 	for(int i = 0 ; i < row ; i++){
 		for(int j = 0 ; j < row ; j++){
@@ -40,9 +68,9 @@ void LU_decom::LU_decom(ifstream &inFile , ofstream &outFile){
 		}
 		outFile << '\n';
 	}
-	return 0;
+	return;
 }
 
-void LU_decom::P_LU(ofstream &outFile){
-	return 0;
+void LU_decom::P_LU(ofstream &outFile , int mode){
+	return;
 }
