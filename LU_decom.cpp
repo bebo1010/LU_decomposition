@@ -23,20 +23,7 @@ void LU_decom::LU(ifstream &inFile , ofstream &outFile){
 	for(int i = 0 ; i < row && i < col ; i++)
 		P[i][i] = 1; //initialize P to indentity matrix
 
-	for(int i = 1 ; i < row ; i++){ //body of LU decomposition
-		for(int j = 0 ; j < col ; j++){
-			if(U[j][j] == 0){ //to prevent something divided by 0
-				P_LU(inFile , outFile, i , j);
-			}
-			if(L[i][j] != 0)
-				goto LOOP_END;
-			double temp = U[i][j] / U[j][j]; 
-			L[i][j] = temp;
-			for(int k = 0 ; k < col ; k++) //do row calculation
-				U[i][k] = U[i][k] - temp * U[j][k];
-		}
-		LOOP_END:;
-	}
+	LU_decomp();
 
 	if(FLAG == false){ //no P_LU() was executed
 
@@ -106,7 +93,25 @@ void LU_decom::LU(ifstream &inFile , ofstream &outFile){
 	return;
 }
 
-void LU_decom::P_LU(ifstream &inFile , ofstream &outFile , int row_i , int col_j){
+void LU_decom::LU_decomp(){
+	for(int i = 1 ; i < row ; i++){ //body of LU decomposition
+		for(int j = 0 ; j < col ; j++){
+			if(U[j][j] == 0){ //to prevent something divided by 0
+				P_LU(i , j);
+			}
+			if(L[i][j] != 0)
+				goto LOOP_END;
+			double temp = U[i][j] / U[j][j]; 
+			L[i][j] = temp;
+			for(int k = 0 ; k < col ; k++) //do row calculation
+				U[i][k] = U[i][k] - temp * U[j][k];
+		}
+		LOOP_END:;
+	}
+	return;
+}
+
+void LU_decom::P_LU(int row_i , int col_j){
 	FLAG = true;
 	for(int j = 0 ; j < col ; j++){
 		bool flag = true; //check if the elements in a row is all 0
@@ -117,7 +122,7 @@ void LU_decom::P_LU(ifstream &inFile , ofstream &outFile , int row_i , int col_j
 				swap(P[row-1][k] , P[row_i][k]);
 				swap(U[row-1][k] , U[row_i][k]); //swap to last row
 			}
-			LU(inFile , outFile);
+			LU_decomp();
 			return;
 		}
 	} 
@@ -128,7 +133,7 @@ void LU_decom::P_LU(ifstream &inFile , ofstream &outFile , int row_i , int col_j
 				swap(P[i][j] , P[row_i][j]);
 				swap(U[i][j] , U[row_i][j]);
 			}
-			LU(inFile , outFile);
+			LU_decomp();
 			return;
 		}
 	}

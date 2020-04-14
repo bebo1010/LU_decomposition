@@ -9,7 +9,8 @@ class LU_decom{
 		void LU(ifstream &inFile , ofstream &outFile);
 		
 	private:
-		void P_LU(ifstream &inFile , ofstream &outFile , int row_i , int col_j);
+		void LU_decomp();
+		void P_LU(int row_i , int col_j);
 		int row;
 		int col;
 		int mat[10][10]; //row col
