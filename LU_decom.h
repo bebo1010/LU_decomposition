@@ -1,15 +1,16 @@
 #include <fstream>
+using namespace std;
 class LU_decom{
 	public:
-		void LU_decom(ifstream &inFile , ofstream &outFile);
+		void LU(ifstream &inFile , ofstream &outFile);
 		
 	private:
 		void P_LU(ofstream &outFile , int mode);
-		static int row;
-		static int col;
-		int mat[row][col];
-		double L[row][row];
-		double U[row][col];
-		int P[row][col];
+		int row;
+		int col;
+		int mat[10][10]; //row col
+		double L[10][10]; //row row
+		double U[10][10]; //row col
+		int P[10][10]; // row col
 };
 

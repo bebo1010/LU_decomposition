@@ -1,5 +1,4 @@
 #include <iostream>
-#include <fstream>
 #include <cstdlib>
 using namespace std;
 
@@ -18,8 +17,9 @@ int main(){
 
 	short int loops = 0;
 	inFile >> loops;
+	LU_decom LU;
 	while(loops >= 0){
-		LU_decom(inFile , outFile);
+		LU.LU(inFile , outFile);
 		loops--;
 	}
 	return 0;

@@ -1,8 +1,17 @@
 #include "LU_decom.h"
 
-void LU_decom::LU_decom(ifstream &inFile , ofstream &outFile){
+void LU_decom::LU(ifstream &inFile , ofstream &outFile){
+	for(int i = 0 ; i < 10 ; i++){ //initialize all elements in matrices to 0
+		for(int j = 0 ; j < 10 ; j++){
+			mat[i][j] = 0;
+			L[i][j] = 0;
+			U[i][j] = 0;
+			P[i][j] = 0;
+		}
+	}
+
 	inFile >> row >> col;
-	for(int i = 0 ; i < row , i++){
+	for(int i = 0 ; i < row ; i++){
 		for(int j = 0 ; j < col ; j++){
 			inFile >> mat[i][j]; //input the matrix data
 			U[i][j] = static_cast<double>(mat[i][j]);
@@ -11,8 +20,10 @@ void LU_decom::LU_decom(ifstream &inFile , ofstream &outFile){
 	
 	for(int i = 0 ; i < row ; i++)
 		L[i][i] = 1; //initialize L to indentity matrix 
+	for(int i = 0 ; i < row && i < col ; i++)
+		P[i][i] = 1; //initialize P to indentity matrix
 
-	for(int i = 1 ; i < row ; i++){
+	for(int i = 1 ; i < row ; i++){ //body of LU decomposition
 		for(int j = 0 ; j < col ; j++){
 			if(mat[i-1][j] == 0){
 				outFile << "False" << endl;
