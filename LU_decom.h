@@ -1,3 +1,6 @@
+#include <cstdio>
+#include <cmath>
+#include <iomanip>
 #include <fstream>
 using namespace std;
 class LU_decom{
@@ -5,7 +8,7 @@ class LU_decom{
 		void LU(ifstream &inFile , ofstream &outFile);
 		
 	private:
-		void P_LU(ofstream &outFile , int mode);
+		void P_LU(ofstream &outFile , int mode , int pos);
 		int row;
 		int col;
 		int mat[10][10]; //row col
