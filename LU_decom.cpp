@@ -1,6 +1,7 @@
 #include "LU_decom.h"
 
 void LU_decom::LU(ifstream &inFile , ofstream &outFile){
+	FLAG = false; //initialize FLAG
 	for(int i = 0 ; i < 10 ; i++){ //initialize all elements in matrices to 0
 		for(int j = 0 ; j < 10 ; j++){
 			mat[i][j] = 0;
@@ -94,6 +95,28 @@ void LU_decom::LU(ifstream &inFile , ofstream &outFile){
 }
 
 void LU_decom::LU_decomp(){
+	if(FLAG == true){ //initialize L and U again , but with row exchange
+		for(int i = 0 ; i < row ; i++){
+			for(int j = 0 ; j < col ; j++){
+				U[i][j] = static_cast<double>(mat[i][j]);
+				L[i][j] = 0;
+			}
+		}
+	
+		for(int i = 0 ; i < row ; i++)
+			L[i][i] = 1; //initialize L to indentity matrix
+		bool flag[row][col] = {false};
+		for(int i = 0 ; i < row ; i++){ //perform row exchange
+			for(int j = 0 ; j < col ; j++){
+				if(P[i][j] != 0 && i != j && flag[i][j] == false && flag[j][i] == false){ //if row exchange is necessary
+					flag[i][j] = true;
+					flag[j][i] = true;
+					for(int k = 0 ; k < col ; k++)
+						swap(U[j][k],U[i][k]);
+				}
+			}
+		}
+	}
 	for(int i = 1 ; i < row ; i++){ //body of LU decomposition
 		for(int j = 0 ; j < col ; j++){
 			if(U[j][j] == 0){ //to prevent something divided by 0
