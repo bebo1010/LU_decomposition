@@ -121,6 +121,7 @@ void LU_decom::LU_decomp(){
 		for(int j = 0 ; j < col ; j++){
 			if(U[j][j] == 0){ //to prevent something divided by 0
 				P_LU(i , j);
+				return;
 			}
 			if(L[i][j] != 0)
 				goto LOOP_END;
