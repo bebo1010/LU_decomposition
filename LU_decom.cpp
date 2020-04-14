@@ -1,7 +1,6 @@
 #include "LU_decom.h"
 
 void LU_decom::LU(ifstream &inFile , ofstream &outFile){
-	FLAG = false; //initialize FLAG to False
 	for(int i = 0 ; i < 10 ; i++){ //initialize all elements in matrices to 0
 		for(int j = 0 ; j < 10 ; j++){
 			mat[i][j] = 0;
@@ -40,7 +39,9 @@ void LU_decom::LU(ifstream &inFile , ofstream &outFile){
 	}
 
 	if(FLAG == false){ //no P_LU() was executed
-		outFile << "True\n";
+
+		outFile << "True" << endl;
+
 		outFile << row << " " << row << endl; //print L
 		for(int i = 0 ; i < row ; i++){
 			for(int j = 0 ; j < row ; j++){
@@ -49,8 +50,9 @@ void LU_decom::LU(ifstream &inFile , ofstream &outFile){
 				if(j != (row - 1))
 					outFile << " ";
 			}
-			outFile << "\n";
+			outFile << endl;
 		}
+
 		outFile << row << " " << col << endl; //print U
 		for(int i = 0 ; i < row ; i++){
 			for(int j = 0 ; j < col ; j++){
@@ -59,12 +61,15 @@ void LU_decom::LU(ifstream &inFile , ofstream &outFile){
 				if(j != (col - 1))
 					outFile << " ";
 			}
-			outFile << "\n";
+			outFile << endl;
 		}
+
 	}
 
 	else{ //P_LU() was executed at lease once
-		outFile << "False\n";
+
+		outFile << "False" << endl;
+
 		outFile << row << " " << row << endl; //print P
 		for(int i = 0 ; i < row ; i++){
 			for(int j = 0 ; j < row ; j++){
@@ -72,8 +77,9 @@ void LU_decom::LU(ifstream &inFile , ofstream &outFile){
 				if(j != (row - 1))
 					outFile << " ";
 			}
-			outFile << "\n";
+			outFile << endl;
 		}
+
 		outFile << row << " " << row << endl; //print L
 		for(int i = 0 ; i < row ; i++){
 			for(int j = 0 ; j < row ; j++){
@@ -82,8 +88,9 @@ void LU_decom::LU(ifstream &inFile , ofstream &outFile){
 				if(j != (row - 1))
 					outFile << " ";
 			}
-			outFile << "\n";
+			outFile << endl;
 		}
+
 		outFile << row << " " << col << endl; //print U
 		for(int i = 0 ; i < row ; i++){
 			for(int j = 0 ; j < col ; j++){
@@ -92,14 +99,29 @@ void LU_decom::LU(ifstream &inFile , ofstream &outFile){
 				if(j != (col - 1))
 					outFile << " ";
 			}
-			outFile << "\n";
+			outFile << endl;
 		}
+
 	}
 	return;
 }
 
 void LU_decom::P_LU(ifstream &inFile , ofstream &outFile , int row_i , int col_j){
 	FLAG = true;
+	for(int j = 0 ; j < col ; j++){
+		bool flag = true; //check if the elements in a row is all 0
+		if(U[row_i][j] != 0)
+			flag = false;
+		if(flag == true){
+			for(int k = 0 ; k < col ; k++){ //exchange row
+				swap(P[row-1][k] , P[row_i][k]);
+				swap(U[row-1][k] , U[row_i][k]); //swap to last row
+			}
+			LU(inFile , outFile);
+			return;
+		}
+	} 
+
 	for(int i = 0 ; i < row && i > row_i ; i++){
 		if(U[i][col_j] != 0){
 			for(int j = 0 ; j < col ; j++){ //exchange row
@@ -110,5 +132,6 @@ void LU_decom::P_LU(ifstream &inFile , ofstream &outFile , int row_i , int col_j
 			return;
 		}
 	}
+
 	return;
 }

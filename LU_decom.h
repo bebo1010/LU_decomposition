@@ -16,6 +16,6 @@ class LU_decom{
 		double L[10][10]; //row row
 		double U[10][10]; //row col
 		int P[10][10]; // row row
-		bool FLAG; //check if P_LU has been executed
+		bool FLAG = false; //check if P_LU has been executed
 };
 
