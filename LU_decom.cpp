@@ -34,6 +34,8 @@ void LU_decom::LU(ifstream &inFile , ofstream &outFile){
 		for(int i = 0 ; i < row ; i++){
 			for(int j = 0 ; j < row ; j++){
 				double roundoff = (round(L[i][j] * 100.0) / 100.0);
+				if(roundoff == -0)
+					roundoff = 0;
 				outFile << left << setprecision(2) << setw(5) << fixed<< roundoff;
 				if(j != (row - 1))
 					outFile << " ";
@@ -45,6 +47,8 @@ void LU_decom::LU(ifstream &inFile , ofstream &outFile){
 		for(int i = 0 ; i < row ; i++){
 			for(int j = 0 ; j < col ; j++){
 				double roundoff = (round(U[i][j] * 100.0) / 100.0);
+				if(roundoff == -0)
+					roundoff = 0;
 				outFile << setprecision(2) << setw(5) << roundoff;
 				if(j != (col - 1))
 					outFile << " ";
@@ -72,6 +76,8 @@ void LU_decom::LU(ifstream &inFile , ofstream &outFile){
 		for(int i = 0 ; i < row ; i++){
 			for(int j = 0 ; j < row ; j++){
 				double roundoff = (round(L[i][j] * 100.0) / 100.0);
+				if(roundoff == -0)
+					roundoff = 0;
 				outFile << setprecision(2) << setw(5) << roundoff;
 				if(j != (row - 1))
 					outFile << " ";
@@ -83,6 +89,8 @@ void LU_decom::LU(ifstream &inFile , ofstream &outFile){
 		for(int i = 0 ; i < row ; i++){
 			for(int j = 0 ; j < col ; j++){
 				double roundoff = (round(U[i][j] * 100.0) / 100.0);
+				if(roundoff == -0)
+					roundoff = 0;
 				outFile << setprecision(2) << setw(5) << roundoff;
 				if(j != (col - 1))
 					outFile << " ";
